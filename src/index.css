@@ -20,3 +20,7 @@ code {
 body{
   background-color: #1e1e2f;
 }
+
+.scr::-webkit-scrollbar{
+  display: none;
+}

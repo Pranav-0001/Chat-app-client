@@ -8,11 +8,12 @@ module.exports = {
       },
       colors:{
         primary:{
-          '100':'#1e1e2f'
+          '100':'#1e1e2f',
+          '200':'#302a3d'
         }
       },
       height:{
-        'max':'100vh'
+        'max':'90vh'
       }
     },
   },

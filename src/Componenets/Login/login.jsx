@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer ,toast } from 'react-toastify'
 
@@ -7,14 +7,16 @@ function Login() {
   const navigate = useNavigate()
   const [email,setEmail]=useState()
   const [password,setPassword]=useState()
-
+  useEffect(()=>{
+    if(localStorage.getItem("userInfo")) navigate('/')
+  },[])
   const handleLogin=async(e)=>{
     e.preventDefault()
     if(email.trim().length===0 || password.trim().length===0){
       toast.error("Email or Password Field is empty")
     }else{
-      const {data}= await axios.post("http://localhost:4000/login",{email,password})
-      console.log(data);
+      const {data}= await axios.post(`${process.env.REACT_APP_BaseUrl}/login`,{email,password})
+  
       if(data.err){
         toast.error(data.err)
       }else{
@@ -27,7 +29,7 @@ function Login() {
     
     <>
     <div className='w-full flex lg:mt-40  items-center justify-center '>
-      <div className='border-2 w-1/4 bg-transparent border-white  text-white rounded-md'>
+      <div className='border-2 mt-20 md:mt-0 lg:w-1/4 bg-transparent border-white  text-white rounded-md'>
         <form onSubmit={handleLogin}>
           <h1 className='text-center mb-4 text-2xl pt-5'>Login</h1>
 

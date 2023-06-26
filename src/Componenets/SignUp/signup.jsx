@@ -1,7 +1,7 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ToastContainer ,toast } from 'react-toastify'
@@ -14,13 +14,15 @@ function Signup() {
     const [password,setpassword]=useState()
     const [pic,setPic]=useState()
     const [loading,setLoading]=useState(false)
-
+    useEffect(()=>{
+      if(localStorage.getItem("userInfo")) navigate('/')
+    },[])
     const generateUrl=(img)=>{
         
         setLoading(true)
-        toast("llll")
+        
         if(img===undefined){
-            console.log("");
+        
             setLoading(false)
         }else{
             const data=new FormData()
@@ -32,11 +34,11 @@ function Signup() {
                 body:data
             }).then((res)=> res.json())
             .then((data)=>{
-                console.log(data);
+               
                 setPic(data.url.toString())
                 setLoading(false)
             }).catch(err=>{
-                console.log(err);
+               
                 setLoading(false)
             })
         }
@@ -51,7 +53,7 @@ function Signup() {
                   "Content-type": "application/json"
                 }
               }
-              const { data } = await axios.post("http://localhost:4000/register", {
+              const { data } = await axios.post(`${process.env.REACT_APP_BaseUrl}/register`, {
                 name: name,
                 email: email,
                 password: password,
@@ -66,7 +68,7 @@ function Signup() {
               }
               
           }else{
-            console.log("kkk");
+            
           }
         }catch(err){
             console.log(err);
@@ -74,8 +76,8 @@ function Signup() {
     }
   return (
     <>
-    <div className='w-full flex lg:mt-40  items-center justify-center '>
-      <div className='border-2 w-1/4 bg-transparent border-white  text-white rounded-md'>
+    <div className='w-full flex lg:mt-40  items-center justify-center px-4 mt-16 md:mt-0'>
+      <div className='border-2 lg:w-1/4 bg-transparent border-white  text-white rounded-md'>
         <form onSubmit={handleSubmit}>
           <h1 className='text-center mb-4 text-2xl pt-5'>SignUp</h1>
 
